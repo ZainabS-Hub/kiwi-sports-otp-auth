@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP System Test</title>
+</head>
+<body>
+    <h1>OTP Authentication System Test</h1>
+    <div id="output"></div>
+
+    <script src="otpManager.js"></script>
+    <script>
+        // Test the OTP system
+        const otpManager = new OTPManager();
+        const output = document.getElementById('output');
+
+        // Test 1: Generate OTP
+        const passcode = 123456;
+        const existed = otpManager.generateOTP(passcode);
+        output.innerHTML += `<p>Generated passcode: ${passcode}</p>`;
+        output.innerHTML += `<p>Already existed: ${existed === true ? 'true' : 'false'}</p>`;
+
+        // Test 2: Verify OTP
+        const isValid = otpManager.verifyOTP(passcode);
+        output.innerHTML += `<p>Is valid: ${isValid}</p>`;
+
+        // Test 3: Check remaining time
+        const remaining = otpManager.getRemainingTime(passcode);
+        output.innerHTML += `<p>Remaining time: ${remaining}ms (${Math.floor(remaining/1000)} seconds)</p>`;
+
+        // Test 4: Consume OTP
+        const consumed = otpManager.consumeOTP(passcode);
+        output.innerHTML += `<p>OTP consumed: ${consumed}</p>`;
+
+        // Test 5: Verify again (should fail)
+        const stillValid = otpManager.verifyOTP(passcode);
+        output.innerHTML += `<p>Still valid after consumption: ${stillValid}</p>`;
+    </script>
+</body>
+</html>
